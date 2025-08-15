@@ -1,0 +1,561 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>Yang's Corner</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <style type="text/css">
+    body {
+      margin: 0;
+      padding: 0;
+      background: #000 url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+      color: #00ff00;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 12px;
+      overflow: auto;
+    }
+    
+    .fixed-window {
+      width: 1200px;
+      height: 800px;
+      margin: 20px auto;
+      border: 2px solid #00ff00;
+      background: rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+      box-shadow: 0 0 20px #00ff00;
+      position: relative;
+    }
+    
+    .window-titlebar {
+      background: linear-gradient(to bottom, #006600, #003300);
+      height: 25px;
+      border-bottom: 1px solid #00ff00;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      font-size: 11px;
+      color: #ffffff;
+    }
+    
+    .window-controls {
+      margin-left: auto;
+      display: flex;
+      gap: 5px;
+    }
+    
+    .window-control {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #00ff00;
+      background: #003300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #00ff00;
+      cursor: pointer;
+    }
+    
+    .window-content {
+      height: calc(100% - 26px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 10px;
+    }
+    
+    .container {
+      display: flex;
+      gap: 10px;
+      width: 1160px;
+    }
+    
+    .column {
+      flex-shrink: 0;
+    }
+    
+    .left-column {
+      width: 280px;
+    }
+    
+    .main-column {
+      width: 600px;
+    }
+    
+    .right-column {
+      width: 280px;
+    }
+    
+    .box {
+      border: 1px solid #00ff00;
+      background: rgba(0, 0, 0, 0.8);
+      margin-bottom: 10px;
+      padding: 8px;
+    }
+    
+    .box-title {
+      color: #00ff00;
+      font-weight: bold;
+      margin-bottom: 5px;
+      padding-bottom: 2px;
+      border-bottom: 1px solid #00ff00;
+    }
+    
+    .main-title {
+      text-align: center;
+      font-size: 24px;
+      color: #ffffff;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #00ff00;
+    }
+    
+    .welcome-section {
+      background: rgba(0, 50, 0, 0.3);
+      border: 1px solid #00ff00;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    
+    .welcome-title {
+      color: #ffffff;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+    
+    .welcome-subtitle {
+      color: #888888;
+      font-size: 11px;
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    
+    .nav-item {
+      color: #00ff00;
+      display: block;
+      margin: 3px 0;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    
+    .nav-item:hover {
+      color: #ffffff;
+      background: rgba(0, 255, 0, 0.1);
+    }
+    
+    .status-item {
+      margin: 5px 0;
+      font-size: 11px;
+    }
+    
+    .changelog-item {
+      margin: 3px 0;
+      font-size: 11px;
+      color: #cccccc;
+    }
+    
+    .time-display {
+      color: #ffffff;
+      font-size: 14px;
+      text-align: center;
+    }
+    
+    .stamps-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+    
+    .stamp {
+      width: 80px;
+      height: 40px;
+      border: 1px solid #00ff00;
+      background: linear-gradient(45deg, #ff0080, #0080ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: white;
+      text-align: center;
+    }
+    
+    .profile-section {
+      display: flex;
+      gap: 15px;
+      margin: 15px 0;
+    }
+    
+    .profile-left {
+      flex: 1;
+    }
+    
+    .profile-right {
+      width: 120px;
+      text-align: center;
+    }
+    
+    .profile-pic {
+      width: 100px;
+      height: 120px;
+      border: 1px solid #00ff00;
+      background: linear-gradient(180deg, #ffddaa, #ffcc88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+    }
+    
+    .favorites-section {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+    }
+    
+    .favorites-column {
+      flex: 1;
+    }
+    
+    .chat-box {
+      background: #000;
+      border: 1px inset #00ff00;
+      height: 120px;
+      overflow-y: auto;
+      padding: 5px;
+      margin: 10px 0;
+    }
+    
+    .chat-input {
+      display: flex;
+      gap: 5px;
+      margin-top: 5px;
+    }
+    
+    .chat-input input {
+      background: #000;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 2px;
+      font-family: inherit;
+      font-size: 11px;
+    }
+    
+    .buttons-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      margin: 10px 0;
+    }
+    
+    .button-88x31 {
+      width: 88px;
+      height: 31px;
+      border: 1px solid #00ff00;
+      background: linear-gradient(45deg, #ff6600, #ffaa00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      color: white;
+      text-align: center;
+    }
+    
+    .counter {
+      text-align: center;
+      padding: 10px;
+      border: 1px solid #00ff00;
+      background: rgba(0, 100, 0, 0.2);
+    }
+    
+    .nekobox {
+      text-align: center;
+      padding: 10px;
+    }
+    
+    .nekobox img {
+      width: 150px;
+      height: 100px;
+      border: 1px solid #00ff00;
+    }
+    
+    .link-button {
+      background: #000;
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 5px;
+      text-align: center;
+      margin: 10px 0;
+      font-family: inherit;
+      font-size: 11px;
+    }
+    
+    .tamagotchi-section {
+      display: flex;
+      justify-content: space-around;
+      margin: 10px 0;
+    }
+    
+    .tamagotchi {
+      width: 40px;
+      height: 40px;
+      border: 1px solid #00ff00;
+      background: radial-gradient(circle, #ffff00, #ff8800);
+      border-radius: 50%;
+    }
+    
+    .end-section {
+      margin-top: 10px;
+      font-size: 11px;
+    }
+    
+    .drawing-area {
+      width: 200px;
+      height: 150px;
+      border: 1px solid #00ff00;
+      background: rgba(255, 255, 255, 0.9);
+      margin: 10px auto;
+    }
+    
+    a {
+      color: #00ffff;
+      text-decoration: none;
+    }
+    
+    a:hover {
+      color: #ffffff;
+    }
+    
+    .blink {
+      animation: blink 1s infinite;
+    }
+    
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="fixed-window">
+  <div class="window-titlebar">
+    <span>Yang's Corner - Netscape Navigator</span>
+    <div class="window-controls">
+      <div class="window-control">_</div>
+      <div class="window-control">□</div>
+      <div class="window-control">×</div>
+    </div>
+  </div>
+  
+  <div class="window-content">
+    <div class="container">
+  <!-- LEFT COLUMN -->
+  <div class="column left-column">
+    <!-- Navigation -->
+    <div class="box">
+      <div class="box-title">--navigation--</div>
+      <a class="nav-item" href="#">>>home</a>
+      <a class="nav-item" href="#">>>about me</a>
+      <a class="nav-item" href="#">>>blog</a>
+      <a class="nav-item" href="#">>>the bus</a>
+      <a class="nav-item" href="#">>>camera collection</a>
+      <a class="nav-item" href="#">>>digital collections</a>
+      <a class="nav-item" href="#">>>guestbook</a>
+      <a class="nav-item" href="#">>>resources</a>
+      <a class="nav-item" href="#">>>awards</a>
+    </div>
+    
+    <!-- Status -->
+    <div class="box">
+      <div class="box-title">--status--</div>
+      <div class="status-item">your talking too long is</div>
+      <div class="status-item">taking too long</div>
+    </div>
+    
+    <!-- Time -->
+    <div class="box">
+      <div class="box-title">--my time--</div>
+      <div class="time-display">3:51:16 am EDT</div>
+    </div>
+    
+    <!-- Changelog -->
+    <div class="box">
+      <div class="box-title">--changelog--</div>
+      <div class="changelog-item">6/26/23: added scanned photos for a new camera!</div>
+      <div class="changelog-item">6/4/23: minor aesthetic changes and a new blog post</div>
+    </div>
+    
+    <!-- Link to Site -->
+    <div class="link-button">
+      --link to my site--<br>
+      <strong>niko ito's corner</strong>
+    </div>
+    
+    <!-- Nekobox -->
+    <div class="box">
+      <div class="box-title">--nekolink--</div>
+      <div class="nekobox">
+        <img src="https://via.placeholder.com/150x100/87CEEB/000000?text=Satorikeiko" alt="Satorikeiko">
+        <div style="font-size: 10px; margin-top: 5px;">I wish I were a bird so I could fly</div>
+        <div class="link-button">nekolink</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN COLUMN -->
+  <div class="column main-column">
+    <div class="main-title">))ang's corner</div>
+    
+    <div class="welcome-section">
+      <div class="welcome-title">>>welcome to my website</div>
+      <div class="welcome-subtitle">(best viewed in firefox on a computer)</div>
+      
+      <p style="font-size: 11px; line-height: 1.4; margin: 15px 0;">
+        hello there everyone, i'm ang! thanks for stopping over to my little corner of the internet. this is just a 
+        place for me to put basically anything i want, think of it like all of my social media except it's one page 
+        that i coded on my own :D
+      </p>
+      
+      <p style="font-size: 11px; line-height: 1.4; margin: 15px 0;">
+        my goal in creating this website was to make something nostalgic- something that reminded me of my own days 
+        on the early internet, and to get away from social media. i wanted to get that late 90s/ early 2000s vibe, 
+        apply my own aesthetic and interests, and hopefully fart out something good. and hey look, this is what i 
+        ended up with! not too bad if i do say so myself.
+      </p>
+      
+      <p style="font-size: 11px; line-height: 1.4; margin: 15px 0;">
+        take a look around what i've got here, but be warned- i'm a complete coding newbie and this website is just 
+        for fun, so it's not very elaborate and there's probably mistakes everywhere (not to mention the code itself 
+        is a complete mess). i'm learning as i go and i hope to keep improving this page as i cram more info into my 
+        little brain.
+      </p>
+      
+      <div style="text-align: center; margin: 15px 0;">
+        <button style="background: #006600; color: white; border: 1px solid #00ff00; padding: 5px 15px; font-family: inherit;">
+          continue to neocities
+        </button>
+      </div>
+    </div>
+    
+    <!-- Stamps Collection -->
+    <div class="stamps-container">
+      <div class="stamp">I love my website</div>
+      <div class="stamp" style="background: linear-gradient(45deg, #0080ff, #00ff80);">Oops... I clicked my Stamp!</div>
+      <div class="stamp" style="background: linear-gradient(45deg, #ff8000, #ffff00);">I listen to WEIRD music</div>
+      <div class="stamp" style="background: linear-gradient(45deg, #ff0040, #ff8080);">90s kid</div>
+      <div class="stamp" style="background: linear-gradient(45deg, #8000ff, #ff00ff);">I still use real paper!</div>
+    </div>
+    
+    <!-- About Me Section -->
+    <div class="box" style="background: rgba(0, 0, 50, 0.5);">
+      <div style="color: #ffffff; font-size: 14px; margin-bottom: 10px;">--a little about me--</div>
+      
+      <div class="profile-section">
+        <div class="profile-left">
+          <div class="favorites-section">
+            <div class="favorites-column">
+              <div style="color: #ffffff; margin-bottom: 5px;"><strong>me:</strong></div>
+              <div>>> name: ang</div>
+              <div>>> birthday: 7/24</div>
+              <div>>> sign: leo</div>
+              <div>>> height: short</div>
+              
+              <div style="color: #ffffff; margin: 15px 0 5px 0;"><strong>fun facts:</strong></div>
+              <div>>> i have a bachelors degree in music</div>
+            </div>
+            
+            <div class="favorites-column">
+              <div style="color: #ffffff; margin-bottom: 5px;"><strong>favorites:</strong></div>
+              <div>>> food: pasta (any kind)</div>
+              <div>>> color: yellow</div>
+              <div>>> vacation: camping</div>
+              <div>>> animal: dog</div>
+              
+              <div style="margin-top: 15px;">
+              <div>>> anime & manga</div>
+              <div>>> reading books</div>
+              <div>>> watching youtube</div>
+              <div>>> playing videogames</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="profile-right">
+          <div class="profile-pic">
+            <div style="font-size: 10px;">anime girl placeholder</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="column right-column">
+    <!-- Style -->
+    <div class="box">
+      <div class="box-title">--style--</div>
+      <div style="text-align: center; font-size: 11px;">switch theme</div>
+    </div>
+    
+    <!-- Clap for me -->
+    <div class="box">
+      <div class="box-title">--clap for me--</div>
+      <div style="text-align: center;">
+        <img src="https://www.webfreecounter.com/hit.php?id=gxfxnxd&nd=6&style=33" alt="counter" style="border: 1px solid #00ff00;">
+      </div>
+    </div>
+    
+    <!-- Buttons -->
+    <div class="box">
+      <div class="box-title">--buttons--</div>
+      <div class="buttons-grid">
+        <div class="button-88x31" style="background: linear-gradient(45deg, #ff69b4, #ff1493);">Kawaii</div>
+        <div class="button-88x31" style="background: linear-gradient(45deg, #00bfff, #1e90ff);">Neocities</div>
+      </div>
+    </div>
+    
+    <!-- Tamagotchi -->
+    <div class="box">
+      <div class="box-title">--tamagotchi--</div>
+      <div class="tamagotchi-section">
+        <div class="tamagotchi"></div>
+        <div class="tamagotchi"></div>
+        <div class="tamagotchi"></div>
+      </div>
+    </div>
+    
+    <!-- Find me -->
+    <div class="box">
+      <div class="box-title">--find me--</div>
+      <div class="end-section">
+        <div><a href="https://letterboxd.com/akhileshified/" target="_blank">letterboxd</a></div>
+        <div><a href="https://myanimelist.net/profile/knight-wing" target="_blank">myanimelist</a></div>
+      </div>
+    </div>
+    
+    <!-- Chat -->
+    <div class="box">
+      <div class="box-title">--chat--</div>
+      <div class="chat-box">
+        <div style="color: #888888;">Anonymous#6540</div>
+        <div style="color: #00ff00; font-size: 10px;">this is fun</div>
+        <div style="color: #888888;">Anonymous#8742</div>
+        <div style="color: #00ff00; font-size: 10px;">strasbourg is so cool, from fellow member blink bini 2 owner 😊</div>
+        <div style="color: #888888;">Anonymous#8354</div>
+        <div style="color: #00ff00; font-size: 10px;">nice</div>
+        <div style="color: #888888;">Anonymous#4730</div>
+        <div style="color: #00ff00; font-size: 10px;">good job good job 😊</div>
+      </div>
+      <div class="chat-input">
+        <input type="text" style="flex: 1;" placeholder="say something...">
+        <button style="background: #000; border: 1px solid #00ff00; color: #00ff00; padding: 2px 8px; font-family: inherit; font-size: 11px;">✓</button>
+      </div>
+    </div>
+    
+    <!-- Drawing area -->
+    <div class="drawing-area"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
